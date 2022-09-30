@@ -20,17 +20,16 @@ function sortString($string =""){
  preg_match_all('/[a-z]/', $string, $lower);
  $sortedLower = $this->sortLower($lower);
 
- foreach ($sortedLower as $key => $lower) {
-   foreach ($sortedUpper as $key => $upper) {
-     echo $this->compareLetters($lower, $upper);
-   }
- }
+ $letters = array_merge($sortedLower,$sortedUpper);
+ natcasesort($letters);
+ $letters = array_values($letters);
+ $letters = implode(' ',$letters);
+ $letters = str_replace(' ', '', $letters);
+ $sortedString = $letters.$sortedNumbers;
 
  return response()->json([
       "string"=>$string,
-      "sortednumber"=>$sortedNumbers,
-      "sorted Upper"=>$sortedUpper,
-      "sorted Lower"=>$sortedLower
+      "sorted String"=>$sortedString,
     ]);
 }
 
@@ -68,10 +67,6 @@ function sortNumbers($numbers){
   sort($numbers);
   $numbers = implode('', $numbers);
   return $numbers;
-}
-
-function compareLetters($lower, $upper){
-  return strcmp($lower, $upper);
 }
 
 // function that takes a number and returns each place value

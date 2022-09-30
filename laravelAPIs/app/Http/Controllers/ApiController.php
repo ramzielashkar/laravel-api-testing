@@ -99,4 +99,11 @@ function realValue($num, $digits){
   $num = (int)$number;
   return $num;
 }
+
+// function to translate from Human to Programmer language
+function toProgrammer(Request $request){
+  return response()->json([
+    "message"=> $request->message
+  ]);
+}
 }

@@ -113,7 +113,15 @@ function toProgrammer(Request $request){
   }
 
   return response()->json([
-    "message"=> $message
+    $request->message=> $message
+  ]);
+}
+
+function evaluatePrefix(Request $request){
+  $prefix = $request->expression;
+
+  return response()->json([
+    $request->expression=>$prefix
   ]);
 }
 }

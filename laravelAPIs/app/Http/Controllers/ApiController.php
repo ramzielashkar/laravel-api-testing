@@ -102,8 +102,18 @@ function realValue($num, $digits){
 
 // function to translate from Human to Programmer language
 function toProgrammer(Request $request){
+  $message = $request->message;
+  preg_match_all('!\d+!', $message, $numbers);
+  $response = [];
+  foreach ($numbers as $key => $value) {
+    foreach ($value as $keys => $values) {
+      $binary =  decbin($values);
+      $message = str_replace($values, $binary, $message);
+    }
+  }
+
   return response()->json([
-    "message"=> $request->message
+    "message"=> $message
   ]);
 }
 }

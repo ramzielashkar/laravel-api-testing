@@ -117,11 +117,53 @@ function toProgrammer(Request $request){
   ]);
 }
 
+// function that evaluates a prefix notation
 function evaluatePrefix(Request $request){
   $prefix = $request->expression;
-
+  $prefix = explode(" ", $prefix);
+  $result = $this->calculatePrefix($prefix);
   return response()->json([
-    $request->expression=>$prefix
+    "result"=>$result
   ]);
+}
+
+// function to calculate prefix notation
+function calculatePrefix($prefix){
+  $stack = [];
+  $i = count($prefix)-1;
+  while ($i>=0) {
+    if(!$this->isOperator($prefix[$i])){
+      array_push($stack, $prefix[$i]);
+      $i= $i-1;
+    }
+    else{
+      $o1 = array_pop($stack);
+      $o2 = array_pop($stack);
+      if($prefix[$i] =='+'){
+        array_push($stack,$o1+$o2);
+      }
+      else if($prefix[$i] =='-'){
+      array_push($stack,$o1-$o2);
+      }
+      else if($prefix[$i] =='*'){
+        array_push($stack, $o1*$o2);
+      }
+      else if($prefix[$i] =='/'){
+        array_push($stack, $o1/$o2);
+      }
+      $i= $i-1;
+    }
+  }
+  return array_pop($stack);
+}
+
+// function to check if the symbol is an operator
+function isOperator($o){
+  if($o == "*" || $o == "+" || $o == "-" || $o == "/" || $o == "^"){
+    return True;
+  }
+  else{
+    return False;
+  }
 }
 }

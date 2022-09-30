@@ -73,4 +73,30 @@ function sortNumbers($numbers){
 function compareLetters($lower, $upper){
   return strcmp($lower, $upper);
 }
+
+// function that takes a number and returns each place value
+function placeValue($num=""){
+  $array  = array_map('intval', str_split($num));
+  $length = count($array);
+  $response = [];
+  for($i=0; $i<$length; $i++){
+    $digits = $length - ($i+1);
+    $value = $this->realValue($array[$i], $digits);
+    $response = Arr::add($response, $array[$i], $value);
+  }
+  return response()->json([
+     $response
+  ]);
+   }
+
+// function to generate the place value of the given number
+function realValue($num, $digits){
+  $array  = array_map('intval', str_split($num));
+  for($i=0; $i<$digits; $i++){
+    array_push($array, "0");
+  }
+  $number = implode("", $array);
+  $num = (int)$number;
+  return $num;
+}
 }

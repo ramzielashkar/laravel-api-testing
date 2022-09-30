@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 
 Route::get("/sort/{string?}", [ApiController::class, 'sortString']);
 Route::get("/value/{num?}", [ApiController::class, 'placeValue']);
+Route::post("/translate/{message?}", [ApiController::class, 'toProgrammer']);
 
 
 
